@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCSE Forces 力学 | AQA Physics 4.5</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080f;--surface:rgba(7,10,22,0.93);
+  --f-green:#4ade80;--f-blue:#60a5fa;--f-orange:#fb923c;
+  --f-red:#f87171;--f-purple:#c084fc;--f-yellow:#fde047;--f-teal:#2dd4bf;
+  --border:rgba(74,222,128,0.2);--text:#eef2f8;--muted:rgba(238,242,248,0.48);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(74,222,128,0.07) 0%,transparent 55%),radial-gradient(ellipse at 80% 70%,rgba(96,165,250,0.06) 0%,transparent 50%),radial-gradient(ellipse at 55% 90%,rgba(251,146,60,0.04) 0%,transparent 40%);pointer-events:none;z-index:0;}
+.container{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:0 20px 80px;}
+
+header{text-align:center;padding:50px 20px 35px;}
+.header-badge{display:inline-block;background:rgba(74,222,128,0.1);border:1px solid var(--f-green);color:var(--f-green);font-family:'Space Mono',monospace;font-size:0.68rem;letter-spacing:3px;padding:5px 16px;border-radius:20px;margin-bottom:18px;text-transform:uppercase;}
+h1{font-family:'Orbitron',sans-serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:900;background:linear-gradient(135deg,var(--f-green),var(--f-blue),var(--f-orange));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:10px;}
+.subtitle-cn{font-size:1.5rem;color:rgba(238,242,248,0.55);font-weight:300;letter-spacing:5px;margin-bottom:6px;}
+.subtitle-en{font-family:'Space Mono',monospace;font-size:0.75rem;color:rgba(238,242,248,0.35);letter-spacing:2px;}
+
+.nav-tabs{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin:26px 0;}
+.tab-btn{background:rgba(7,10,22,0.8);border:1px solid var(--border);color:var(--muted);padding:9px 16px;border-radius:30px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;font-size:0.8rem;transition:all 0.3s;white-space:nowrap;}
+.tab-btn:hover,.tab-btn.active{background:rgba(74,222,128,0.1);border-color:var(--f-green);color:var(--f-green);box-shadow:0 0 18px rgba(74,222,128,0.15);}
+.tab-btn .cn{display:block;font-size:0.65rem;opacity:0.65;margin-top:2px;}
+
+.section{display:none;animation:fadeIn 0.35s ease;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section-title{font-family:'Orbitron',sans-serif;font-size:1.2rem;color:var(--f-green);margin-bottom:5px;display:flex;align-items:center;gap:10px;}
+.section-title::before{content:'';width:4px;height:22px;background:var(--f-green);border-radius:2px;display:inline-block;}
+.section-cn{color:var(--muted);font-size:0.88rem;margin-bottom:20px;padding-left:14px;}
+
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:13px;margin-top:16px;}
+.concept-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:17px;cursor:pointer;transition:all 0.3s;overflow:hidden;}
+.concept-card:hover{border-color:var(--f-green);box-shadow:0 0 22px rgba(74,222,128,0.1);transform:translateY(-2px);}
+.concept-card.expanded{border-color:var(--f-blue);box-shadow:0 0 22px rgba(96,165,250,0.1);}
+.card-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.card-icon{font-size:1.65rem;line-height:1;}
+.card-terms{flex:1;}
+.term-en{font-family:'Space Mono',monospace;font-size:0.88rem;color:var(--f-yellow);font-weight:700;}
+.term-cn{font-size:1rem;color:var(--text);margin-top:3px;}
+.term-pinyin{font-size:0.7rem;color:var(--muted);font-style:italic;margin-top:1px;}
+.expand-arrow{color:var(--muted);font-size:0.72rem;transition:transform 0.3s;margin-top:4px;}
+.concept-card.expanded .expand-arrow{transform:rotate(180deg);}
+.card-body{display:none;margin-top:13px;padding-top:13px;border-top:1px solid rgba(74,222,128,0.1);}
+.concept-card.expanded .card-body{display:block;}
+.def-en{font-size:0.82rem;color:rgba(238,242,248,0.8);line-height:1.6;margin-bottom:8px;}
+.def-cn{font-size:0.82rem;color:rgba(96,165,250,0.85);line-height:1.7;background:rgba(96,165,250,0.05);padding:8px 11px;border-radius:6px;border-left:2px solid var(--f-blue);}
+.key-fact{margin-top:8px;font-size:0.74rem;color:var(--f-yellow);font-family:'Space Mono',monospace;}
+.ht-badge{display:inline-block;font-size:0.62rem;font-family:'Space Mono',monospace;padding:2px 6px;border-radius:7px;background:rgba(192,132,252,0.12);border:1px solid rgba(192,132,252,0.3);color:var(--f-purple);margin-left:5px;vertical-align:middle;}
+
+/* FREE BODY DIAGRAMS */
+.fbd-box{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:24px;margin-top:16px;}
+.fbd-tabs{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap;}
+.fbd-tab{background:rgba(7,10,22,0.8);border:1px solid var(--border);color:var(--muted);padding:8px 15px;border-radius:20px;cursor:pointer;font-size:0.79rem;transition:all 0.3s;}
+.fbd-tab:hover,.fbd-tab.active{background:rgba(74,222,128,0.1);border-color:var(--f-green);color:var(--f-green);}
+.fbd-tab .cn{font-size:0.63rem;display:block;opacity:0.65;}
+.fbd-diagram{display:none;}
+.fbd-diagram.active{display:block;animation:fadeIn 0.25s ease;}
+.fbd-info{margin-top:14px;padding:13px 17px;background:rgba(96,165,250,0.05);border:1px solid rgba(96,165,250,0.16);border-radius:9px;}
+.fbd-title{font-family:'Space Mono',monospace;color:var(--f-yellow);font-size:0.8rem;margin-bottom:5px;}
+.fbd-rule{font-size:0.82rem;color:rgba(238,242,248,0.8);line-height:1.6;margin-bottom:3px;}
+
+/* EQUATIONS */
+.eq-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:21px 24px;margin-bottom:13px;}
+.eq-name{font-size:0.98rem;color:var(--text);margin-bottom:3px;}
+.eq-name-cn{font-size:0.82rem;color:var(--muted);margin-bottom:11px;}
+.eq-formula{font-family:'Space Mono',monospace;font-size:1.35rem;color:var(--f-yellow);text-align:center;padding:15px;background:rgba(253,224,71,0.05);border-radius:8px;margin:11px 0;letter-spacing:1px;}
+.eq-badge{display:inline-block;font-size:0.65rem;font-family:'Space Mono',monospace;padding:2px 7px;border-radius:8px;margin-left:7px;vertical-align:middle;}
+.eq-badge.recall{background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.35);color:var(--f-red);}
+.eq-badge.given{background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.28);color:var(--f-green);}
+.eq-vars{font-size:0.8rem;color:rgba(238,242,248,0.7);line-height:1.9;}
+.eq-vars span{color:var(--f-blue);font-family:'Space Mono',monospace;}
+.worked-ex{margin-top:13px;padding:13px 15px;background:rgba(45,212,191,0.05);border:1px solid rgba(45,212,191,0.18);border-radius:7px;}
+.we-title{font-size:0.7rem;font-family:'Space Mono',monospace;color:var(--f-teal);letter-spacing:1px;margin-bottom:7px;}
+.we-body{font-size:0.8rem;color:rgba(238,242,248,0.8);line-height:1.8;}
+.we-body .step{color:var(--f-teal);font-family:'Space Mono',monospace;}
+.we-cn{font-size:0.78rem;color:rgba(45,212,191,0.6);margin-top:5px;line-height:1.6;}
+.spec-ref{font-size:0.65rem;font-family:'Space Mono',monospace;color:var(--muted);margin-bottom:11px;}
+
+/* GLOSSARY */
+.search-box{width:100%;padding:11px 20px;background:rgba(7,10,22,0.8);border:1px solid var(--border);border-radius:30px;color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:0.87rem;outline:none;margin-bottom:17px;transition:border-color 0.3s;}
+.search-box:focus{border-color:var(--f-green);}
+.search-box::placeholder{color:rgba(238,242,248,0.3);}
+.glossary-table{width:100%;border-collapse:collapse;}
+.glossary-table th{font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--f-green);text-align:left;padding:10px 13px;border-bottom:1px solid rgba(74,222,128,0.15);letter-spacing:1px;text-transform:uppercase;}
+.glossary-table td{padding:10px 13px;border-bottom:1px solid rgba(255,255,255,0.04);vertical-align:top;}
+.glossary-table tr:hover td{background:rgba(74,222,128,0.03);}
+.gl-en{font-family:'Space Mono',monospace;font-size:0.8rem;color:var(--f-yellow);}
+.gl-cn{font-size:0.93rem;color:var(--text);margin:2px 0;}
+.gl-py{font-size:0.7rem;color:var(--muted);font-style:italic;}
+.gl-def{font-size:0.78rem;color:rgba(238,242,248,0.7);line-height:1.5;}
+.gl-def-cn{font-size:0.78rem;color:rgba(96,165,250,0.62);line-height:1.6;}
+
+/* QUIZ */
+.quiz-container{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:27px;margin-top:16px;}
+.quiz-progress{display:flex;justify-content:space-between;align-items:center;margin-bottom:21px;}
+.progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.08);border-radius:2px;margin:0 13px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--f-green),var(--f-blue));border-radius:2px;transition:width 0.5s ease;}
+.progress-text{font-family:'Space Mono',monospace;font-size:0.76rem;color:var(--muted);}
+.score-display{font-family:'Orbitron',sans-serif;font-size:0.86rem;color:var(--f-yellow);}
+.question-box{text-align:center;margin-bottom:20px;}
+.question-text{font-size:1.08rem;line-height:1.6;color:var(--text);margin-bottom:5px;}
+.question-cn{font-size:0.86rem;color:rgba(96,165,250,0.6);}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.option-btn{background:rgba(7,10,22,0.8);border:1px solid rgba(238,242,248,0.12);color:var(--text);padding:12px 13px;border-radius:10px;cursor:pointer;font-family:'Noto Sans SC',sans-serif;font-size:0.81rem;text-align:left;transition:all 0.3s;line-height:1.5;}
+.option-btn:hover:not(:disabled){border-color:var(--f-green);background:rgba(74,222,128,0.06);}
+.option-btn.correct{border-color:var(--f-green);background:rgba(74,222,128,0.08);color:var(--f-green);}
+.option-btn.wrong{border-color:var(--f-red);background:rgba(248,113,113,0.08);color:var(--f-red);}
+.feedback-box{padding:12px 17px;border-radius:9px;font-size:0.86rem;line-height:1.6;display:none;margin-bottom:12px;}
+.feedback-box.show{display:block;}
+.feedback-box.correct{background:rgba(74,222,128,0.07);border:1px solid var(--f-green);color:var(--f-green);}
+.feedback-box.wrong{background:rgba(248,113,113,0.07);border:1px solid var(--f-red);color:var(--f-red);}
+.next-btn{display:none;width:100%;padding:12px;background:linear-gradient(135deg,var(--f-green),var(--f-blue));border:none;border-radius:10px;color:#070a0f;font-family:'Orbitron',sans-serif;font-size:0.86rem;cursor:pointer;font-weight:700;transition:all 0.3s;}
+.next-btn.show{display:block;}
+.next-btn:hover{opacity:0.9;transform:translateY(-1px);box-shadow:0 5px 18px rgba(74,222,128,0.25);}
+.quiz-result{text-align:center;padding:26px;display:none;}
+.quiz-result.show{display:block;}
+.result-score{font-family:'Orbitron',sans-serif;font-size:2.7rem;background:linear-gradient(135deg,var(--f-yellow),var(--f-green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;}
+.result-msg{font-size:1.03rem;margin-bottom:4px;}
+.result-cn{font-size:0.86rem;color:var(--muted);margin-bottom:20px;}
+.restart-btn{padding:10px 26px;background:transparent;border:1px solid var(--f-green);color:var(--f-green);border-radius:30px;cursor:pointer;font-family:'Space Mono',monospace;font-size:0.8rem;transition:all 0.3s;}
+.restart-btn:hover{background:rgba(74,222,128,0.08);}
+
+@media(max-width:600px){.options-grid{grid-template-columns:1fr;}.cards-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div class="header-badge">GCSE Physics · Year 11 · AQA 4.5 · Higher Tier</div>
+  <h1>FORCES</h1>
+  <div class="subtitle-cn">力学</div>
+  <div class="subtitle-en">Interactive Bilingual Revision Resource · Higher Tier · 互动双语复习资源（高级）</div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab(event,'concepts')">Key Concepts<span class="cn">核心概念</span></button>
+  <button class="tab-btn" onclick="showTab(event,'diagrams')">Force Diagrams<span class="cn">力图</span></button>
+  <button class="tab-btn" onclick="showTab(event,'motion')">Motion Graphs<span class="cn">运动图</span></button>
+  <button class="tab-btn" onclick="showTab(event,'equations')">Equations<span class="cn">公式</span></button>
+  <button class="tab-btn" onclick="showTab(event,'glossary')">Glossary<span class="cn">词汇表</span></button>
+  <button class="tab-btn" onclick="showTab(event,'quiz')">Quiz<span class="cn">测验</span></button>
+</nav>
+
+<!-- ══ CONCEPTS ══ -->
+<div class="section active" id="section-concepts">
+  <div class="section-title">Key Concepts</div>
+  <div class="section-cn">核心概念 — Click each card to expand · 点击卡片展开</div>
+
+  <div style="background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.2);border-radius:10px;padding:11px 17px;margin-bottom:16px;font-size:0.8rem;color:rgba(238,242,248,0.62);line-height:1.6;">
+    🎯 <strong style="color:var(--f-green)">AQA Higher Tier 4.5</strong> — Forces is one of the largest topics. Higher Tier includes all Foundation content plus <span class="ht-badge">HT</span> items: vector resolution, liquid pressure, momentum and Newton's 2nd law with changing momentum.<br>
+    <span style="font-size:0.76rem;color:rgba(74,222,128,0.55)">力学是最大的章节之一。高级包含所有基础内容及标注的高级内容：向量分解、液体压强、动量和牛顿第二定律（动量变化形式）。</span>
+  </div>
+
+  <div class="cards-grid">
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">📏</div>
+        <div class="card-terms"><div class="term-en">Scalar vs Vector</div><div class="term-cn">标量与矢量</div><div class="term-pinyin">biāo liàng yǔ shǐ liàng</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">A <strong>scalar</strong> has magnitude only (e.g. speed, distance, mass, temperature, time). A <strong>vector</strong> has both magnitude and direction (e.g. velocity, displacement, force, acceleration, momentum). Vectors are represented by arrows — length shows magnitude, direction shows the direction of the quantity.</div>
+        <div class="def-cn"><strong>标量</strong>只有大小（如速率、距离、质量、温度、时间）。<strong>矢量</strong>既有大小又有方向（如速度、位移、力、加速度、动量）。矢量用箭头表示——长度表示大小，方向表示量的方向。</div>
+        <div class="key-fact">★ Force, velocity, acceleration, momentum = vectors 矢量 · Speed, mass, time = scalars 标量</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🤝</div>
+        <div class="card-terms"><div class="term-en">Contact &amp; Non-Contact Forces</div><div class="term-cn">接触力与非接触力</div><div class="term-pinyin">jiē chù lì yǔ fēi jiē chù lì</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en"><strong>Contact forces</strong> act between objects that are physically touching: friction, air resistance, tension, normal contact force. <strong>Non-contact forces</strong> act between physically separated objects: gravitational force, electrostatic force, magnetic force. All forces occur in interaction pairs.</div>
+        <div class="def-cn"><strong>接触力</strong>作用于物理接触的物体之间：摩擦力、空气阻力、张力、法向接触力。<strong>非接触力</strong>作用于物理分离的物体之间：引力、静电力、磁力。所有力都以相互作用对的形式出现。</div>
+        <div class="key-fact">★ Contact 接触: friction 摩擦, tension 张力, normal 法向 · Non-contact 非接触: gravity 引力, magnetic 磁力</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">⚖️</div>
+        <div class="card-terms"><div class="term-en">Weight vs Mass</div><div class="term-cn">重力与质量</div><div class="term-pinyin">zhòng lì yǔ zhì liàng</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en"><strong>Mass</strong>: the amount of matter in an object (kg). Stays the same everywhere. <strong>Weight</strong>: the force of gravity acting on an object (N). Depends on the gravitational field strength at that location. W = mg. On Earth g ≈ 10 N/kg. Weight acts at the object's <strong>centre of mass</strong>.</div>
+        <div class="def-cn"><strong>质量</strong>：物体中物质的量（千克）。在任何地方都相同。<strong>重力</strong>：作用在物体上的引力（牛顿）。取决于该位置的引力场强度。W = mg。在地球上g ≈ 10 N/kg。重力作用于物体的<strong>质心</strong>。</div>
+        <div class="key-fact">★ W = mg · Weight is a force (vector 矢量) · Mass is a scalar 标量</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">➡️</div>
+        <div class="card-terms"><div class="term-en">Resultant Force</div><div class="term-cn">合力</div><div class="term-pinyin">hé lì</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">The single force that has the same effect as all forces acting on an object combined. For forces in a straight line: add forces in the same direction, subtract opposing forces. A resultant force of <strong>zero</strong> means the object is in <strong>equilibrium</strong> (balanced forces).</div>
+        <div class="def-cn">与作用在物体上的所有力合并后效果相同的单一力。对于直线上的力：同向力相加，反向力相减。合力为<strong>零</strong>意味着物体处于<strong>平衡</strong>状态（力平衡）。</div>
+        <div class="key-fact">★ Resultant = 0 → equilibrium 平衡 · Resultant ≠ 0 → acceleration 加速度</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🔀</div>
+        <div class="card-terms">
+          <div class="term-en">Resolving Forces <span class="ht-badge">HT</span></div>
+          <div class="term-cn">力的分解</div><div class="term-pinyin">lì de fēn jiě</div>
+        </div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">A single force can be split into two <strong>components at right angles</strong> to each other. Use scale drawings (vector diagrams) to find the resultant of two forces or resolve a single force into components. The two components together have the same effect as the original single force.</div>
+        <div class="def-cn">单一力可以分解为两个<strong>互相垂直的分量</strong>。使用比例图（向量图）来求两个力的合力或将单一力分解为分量。两个分量合在一起与原来的单一力效果相同。</div>
+        <div class="key-fact">★ Use scale drawings (vector diagrams) 使用比例图 · Components at 90° 分量成90°</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🔧</div>
+        <div class="card-terms"><div class="term-en">Work Done &amp; Energy Transfer</div><div class="term-cn">做功与能量转移</div><div class="term-pinyin">zuò gōng yǔ néng liàng zhuǎn yí</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">Work is done when a force causes an object to <strong>move in the direction of the force</strong>. W = Fs. One joule of work is done when a 1 N force moves an object 1 m. Work done against friction is transferred to <strong>thermal energy</strong> (heat). Work done = energy transferred.</div>
+        <div class="def-cn">当力使物体<strong>沿力的方向运动</strong>时，就做了功。W = Fs。当1 N的力使物体移动1 m时，做了1焦耳的功。克服摩擦力做功转化为<strong>热能</strong>。做功 = 能量转移。</div>
+        <div class="key-fact">★ W = Fs · 1 J = 1 N·m · Work done = energy transferred 做功=能量转移</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🌀</div>
+        <div class="card-terms"><div class="term-en">Elasticity &amp; Hooke's Law</div><div class="term-cn">弹性与胡克定律</div><div class="term-pinyin">tán xìng yǔ hú kè dìng lǜ</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">Extension is <strong>directly proportional</strong> to force — up to the <strong>limit of proportionality</strong>. F = ke. <strong>Elastic deformation</strong>: object returns to original shape. <strong>Inelastic deformation</strong>: object does not return to original shape (permanently deformed). A stretched spring stores elastic potential energy: Ee = ½ke².</div>
+        <div class="def-cn">在<strong>比例极限</strong>内，伸长量与力<strong>成正比</strong>。F = ke。<strong>弹性形变</strong>：物体恢复原来形状。<strong>非弹性形变</strong>：物体不能恢复原来形状（永久形变）。拉伸的弹簧储存弹性势能：Ee = ½ke²。</div>
+        <div class="key-fact">★ F = ke (Hooke's Law) · Ee = ½ke² (given on sheet) · Limit of proportionality 比例极限</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🔄</div>
+        <div class="card-terms"><div class="term-en">Moments &amp; Levers</div><div class="term-cn">力矩与杠杆</div><div class="term-pinyin">lì jǔ yǔ gǎn gǎn</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">A <strong>moment</strong> is the turning effect of a force. M = F × d, where d is the <strong>perpendicular distance from the pivot</strong>. If balanced: total <strong>clockwise</strong> moments = total <strong>anticlockwise</strong> moments. A lever uses a pivot to multiply the effect of a force. Gears transmit rotational forces.</div>
+        <div class="def-cn"><strong>力矩</strong>是力的转动效应。M = F × d，其中d是<strong>从支点的垂直距离</strong>。若平衡：总<strong>顺时针</strong>力矩 = 总<strong>逆时针</strong>力矩。杠杆用支点来放大力的效果。齿轮传递旋转力。</div>
+        <div class="key-fact">★ M = Fd · Balanced: clockwise 顺时针 moments = anticlockwise 逆时针 moments</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">💧</div>
+        <div class="card-terms"><div class="term-en">Pressure in Fluids</div><div class="term-cn">流体压强</div><div class="term-pinyin">liú tǐ yā qiáng</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">Pressure in a fluid acts <strong>normal (perpendicular)</strong> to any surface. p = F/A (both tiers). At deeper levels in a liquid, pressure is greater. Pressure due to a liquid column: <strong>p = hρg</strong> <span class="ht-badge">HT</span>. Atmospheric pressure decreases with altitude. Objects less dense than a fluid float (upthrust <span class="ht-badge">HT</span>).</div>
+        <div class="def-cn">流体压强<strong>垂直</strong>作用于任何表面。p = F/A（两个级别）。液体越深处压强越大。液柱产生的压强：<strong>p = hρg</strong> <span class="ht-badge">HT</span>。大气压随海拔升高而降低。密度小于流体的物体漂浮（浮力 <span class="ht-badge">HT</span>）。</div>
+        <div class="key-fact">★ p = F/A (both) · p = hρg (HT given) · Deeper = greater pressure 越深压强越大</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🏎️</div>
+        <div class="card-terms"><div class="term-en">Speed &amp; Velocity</div><div class="term-cn">速率与速度</div><div class="term-pinyin">sù lǜ yǔ sù dù</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en"><strong>Speed</strong> is a scalar: how fast an object moves (m/s). <strong>Velocity</strong> is a vector: speed in a specific direction (m/s). v = d/t for uniform speed. An object moving in a circle at constant speed is <strong>accelerating</strong> because direction (and therefore velocity) is changing.</div>
+        <div class="def-cn"><strong>速率</strong>是标量：物体运动的快慢（m/s）。<strong>速度</strong>是矢量：特定方向的速率（m/s）。匀速时 v = d/t。以恒定速率做圆周运动的物体是在<strong>加速</strong>的，因为方向（因此速度）在变化。</div>
+        <div class="key-fact">★ v = d/t · Speed = scalar 标量 · Velocity = vector 矢量 (has direction)</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">📈</div>
+        <div class="card-terms"><div class="term-en">Acceleration</div><div class="term-cn">加速度</div><div class="term-pinyin">jiā sù dù</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">The <strong>rate of change of velocity</strong>. a = (v − u) / t. Unit: m/s². Can be positive (speeding up) or negative (decelerating/slowing down). Near Earth's surface, objects in free fall accelerate at g ≈ 10 m/s². Also: v² = u² + 2as <span class="ht-badge">HT given</span></div>
+        <div class="def-cn"><strong>速度的变化率</strong>。a = (v − u) / t。单位：m/s²。可以为正（加速）或负（减速）。在地球表面附近，自由落体以g ≈ 10 m/s²加速。还有：v² = u² + 2as <span class="ht-badge">HT 给出</span></div>
+        <div class="key-fact">★ a = (v-u)/t · v² = u² + 2as (HT, given) · g = 10 m/s² near Earth</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">1️⃣</div>
+        <div class="card-terms"><div class="term-en">Newton's First Law</div><div class="term-cn">牛顿第一定律</div><div class="term-pinyin">niú dùn dì yī dìng lǜ</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">An object will remain at <strong>rest</strong>, or continue moving at <strong>constant velocity</strong>, unless acted upon by a <strong>resultant (unbalanced) force</strong>. This is inertia — the tendency of objects to resist changes in motion. A stationary object has balanced forces (resultant = 0).</div>
+        <div class="def-cn">物体将保持<strong>静止</strong>或以<strong>恒定速度</strong>继续运动，除非受到<strong>合力（不平衡力）</strong>的作用。这就是惯性——物体抵抗运动变化的趋势。静止物体受平衡力（合力=0）。</div>
+        <div class="key-fact">★ No resultant force = no change in motion 无合力=无运动变化 (inertia 惯性)</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">2️⃣</div>
+        <div class="card-terms"><div class="term-en">Newton's Second Law</div><div class="term-cn">牛顿第二定律</div><div class="term-pinyin">niú dùn dì èr dìng lǜ</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">The <strong>acceleration</strong> of an object is proportional to the <strong>resultant force</strong> and inversely proportional to its <strong>mass</strong>. F = ma. Higher mass needs more force for the same acceleration. <span class="ht-badge">HT</span>: Also expressed as: force = rate of change of momentum (F = Δp/Δt).</div>
+        <div class="def-cn">物体的<strong>加速度</strong>与<strong>合力</strong>成正比，与其<strong>质量</strong>成反比。F = ma。质量越大，产生相同加速度所需的力越大。<span class="ht-badge">HT</span>：也可表示为：力 = 动量变化率（F = Δp/Δt）。</div>
+        <div class="key-fact">★ F = ma (recall) · F = Δp/Δt (HT) · Bigger mass = more force needed for same a</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">3️⃣</div>
+        <div class="card-terms"><div class="term-en">Newton's Third Law</div><div class="term-cn">牛顿第三定律</div><div class="term-pinyin">niú dùn dì sān dìng lǜ</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">When object A exerts a force on object B, object B exerts an <strong>equal and opposite force</strong> on object A. Forces always come in <strong>interaction pairs</strong> that are: equal in magnitude, opposite in direction, same type of force, acting on different objects.</div>
+        <div class="def-cn">当物体A对物体B施加力时，物体B对物体A施加<strong>大小相等、方向相反</strong>的力。力总是以<strong>相互作用对</strong>的形式出现：大小相等、方向相反、同种类型的力、作用在不同物体上。</div>
+        <div class="key-fact">★ Equal, opposite, same type, different objects 大小相等、方向相反、同种力、不同物体</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🚗</div>
+        <div class="card-terms"><div class="term-en">Stopping Distance</div><div class="term-cn">制动距离</div><div class="term-pinyin">zhì dòng jù lí</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en"><strong>Stopping distance</strong> = <strong>thinking distance</strong> + <strong>braking distance</strong>. Thinking distance increases with speed and reaction time (affected by tiredness, drugs, alcohol, distractions). Braking distance increases with speed, wet/icy roads, worn tyres or brakes. Large decelerations can be dangerous.</div>
+        <div class="def-cn"><strong>制动距离</strong> = <strong>反应距离</strong> + <strong>刹车距离</strong>。反应距离随速度和反应时间增加（受疲劳、药物、酒精、分心影响）。刹车距离随速度、湿滑路面、磨损轮胎或制动器增加。大幅减速可能很危险。</div>
+        <div class="key-fact">★ Stopping = thinking + braking · Speed has huge effect (doubling speed → 4× braking distance)</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🪂</div>
+        <div class="card-terms"><div class="term-en">Terminal Velocity</div><div class="term-cn">终端速度</div><div class="term-pinyin">zhōng duān sù dù</div></div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">When a falling object reaches <strong>terminal velocity</strong>, the drag force (air resistance) equals the weight. Resultant force = 0, so acceleration = 0 and speed is constant. As speed increases from rest, drag increases until it equals weight. A parachute increases drag, reducing terminal velocity.</div>
+        <div class="def-cn">当下落物体达到<strong>终端速度</strong>时，阻力（空气阻力）等于重力。合力=0，所以加速度=0，速度恒定。从静止开始，随速度增大，阻力增大直到等于重力。降落伞增大阻力，降低终端速度。</div>
+        <div class="key-fact">★ Terminal velocity: drag = weight, resultant = 0, acceleration = 0 阻力=重力，合力=0</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">💨</div>
+        <div class="card-terms">
+          <div class="term-en">Momentum <span class="ht-badge">HT</span></div>
+          <div class="term-cn">动量</div><div class="term-pinyin">dòng liàng</div>
+        </div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">Momentum = mass × velocity (p = mv). It is a <strong>vector</strong> quantity. The <strong>conservation of momentum</strong>: in a closed system, total momentum before an event equals total momentum after. Used to analyse collisions and explosions. Newton's 2nd law: F = Δ(mv)/Δt = rate of change of momentum.</div>
+        <div class="def-cn">动量 = 质量 × 速度（p = mv）。它是一个<strong>矢量</strong>。<strong>动量守恒</strong>：在封闭系统中，事件前的总动量等于事件后的总动量。用于分析碰撞和爆炸。牛顿第二定律：F = Δ(mv)/Δt = 动量变化率。</div>
+        <div class="key-fact">★ p = mv · Conservation: total p before = total p after · F = Δp/Δt</div>
+      </div>
+    </div>
+
+    <div class="concept-card" onclick="toggleCard(this)">
+      <div class="card-header"><div class="card-icon">🚘</div>
+        <div class="card-terms">
+          <div class="term-en">Safety &amp; Momentum Change <span class="ht-badge">HT</span></div>
+          <div class="term-cn">安全与动量变化</div><div class="term-pinyin">ān quán yǔ dòng liàng biàn huà</div>
+        </div>
+        <div class="expand-arrow">▼</div></div>
+      <div class="card-body">
+        <div class="def-en">F = Δp/Δt. If the change in momentum is fixed (e.g. in a crash), <strong>increasing the time</strong> over which the momentum changes <strong>reduces the force</strong>. Car safety features — crumple zones, seat belts, air bags — all work by increasing collision time, reducing force on occupants.</div>
+        <div class="def-cn">F = Δp/Δt。如果动量变化量固定（如在碰撞中），<strong>增加动量变化的时间</strong>可以<strong>减小力</strong>。汽车安全功能——溃缩区、安全带、安全气囊——都通过增加碰撞时间来减小对乘员的力。</div>
+        <div class="key-fact">★ Longer time → smaller force · Crumple zones, seatbelts, airbags all increase collision time</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ FORCE DIAGRAMS ══ -->
+<div class="section" id="section-diagrams">
+  <div class="section-title">Force Diagrams</div>
+  <div class="section-cn">力图 — Click a tab to explore different situations · 点击标签探索不同情况</div>
+
+  <div class="fbd-box">
+    <div class="fbd-tabs">
+      <div class="fbd-tab active" onclick="showFBD(event,'rest')">Object at Rest<span class="cn">静止物体</span></div>
+      <div class="fbd-tab" onclick="showFBD(event,'moving')">Constant Velocity<span class="cn">匀速运动</span></div>
+      <div class="fbd-tab" onclick="showFBD(event,'accel')">Accelerating<span class="cn">加速运动</span></div>
+      <div class="fbd-tab" onclick="showFBD(event,'falling')">Terminal Velocity<span class="cn">终端速度</span></div>
+      <div class="fbd-tab" onclick="showFBD(event,'spring')">Spring (Hooke's)<span class="cn">弹簧（胡克定律）</span></div>
+      <div class="fbd-tab" onclick="showFBD(event,'moment')">Moment / Lever<span class="cn">力矩/杠杆</span></div>
+    </div>
+
+    <!-- AT REST -->
+    <div class="fbd-diagram active" id="fbd-rest">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;height:auto;display:block;margin:0 auto;">
+        <rect x="195" y="110" width="110" height="70" rx="6" fill="rgba(74,222,128,0.15)" stroke="var(--f-green)" stroke-width="2"/>
+        <text x="250" y="150" fill="var(--f-green)" font-size="13" font-family="Space Mono" text-anchor="middle">object 物体</text>
+        <!-- Weight down -->
+        <line x1="250" y1="180" x2="250" y2="230" stroke="var(--f-red)" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+        <text x="290" y="210" fill="var(--f-red)" font-size="11" font-family="Space Mono">Weight W</text>
+        <text x="290" y="225" fill="rgba(248,113,113,0.6)" font-size="10" font-family="Noto Sans SC">重力 ↓</text>
+        <!-- Normal force up -->
+        <line x1="250" y1="110" x2="250" y2="60" stroke="var(--f-blue)" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+        <text x="262" y="85" fill="var(--f-blue)" font-size="11" font-family="Space Mono">Normal N</text>
+        <text x="262" y="100" fill="rgba(96,165,250,0.6)" font-size="10" font-family="Noto Sans SC">法向力 ↑</text>
+        <!-- Ground line -->
+        <line x1="100" y1="182" x2="400" y2="182" stroke="rgba(238,242,248,0.3)" stroke-width="2"/>
+        <!-- Resultant = 0 label -->
+        <text x="250" y="250" fill="var(--f-yellow)" font-size="11" font-family="Space Mono" text-anchor="middle">Resultant = 0 N</text>
+        <text x="250" y="262" fill="rgba(253,224,71,0.6)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">合力 = 0，平衡</text>
+        <defs>
+          <marker id="arrowRed" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-red)"/></marker>
+          <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-blue)"/></marker>
+          <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-green)"/></marker>
+          <marker id="arrowOrange" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-orange)"/></marker>
+        </defs>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Object at Rest — Balanced Forces 静止物体——平衡力</div>
+        <div class="fbd-rule">• Weight (W) acts downward = Normal contact force (N) acts upward 重力向下 = 法向力向上</div>
+        <div class="fbd-rule">• Resultant force = 0 N → No acceleration (Newton's 1st Law) 合力=0→无加速度（牛顿第一定律）</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• 物体静止是因为合力为零，而不是因为没有力作用。</div>
+      </div>
+    </div>
+
+    <!-- CONSTANT VELOCITY -->
+    <div class="fbd-diagram" id="fbd-moving">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;height:auto;display:block;margin:0 auto;">
+        <rect x="175" y="110" width="130" height="70" rx="6" fill="rgba(74,222,128,0.12)" stroke="var(--f-green)" stroke-width="2"/>
+        <text x="240" y="150" fill="var(--f-green)" font-size="11" font-family="Space Mono" text-anchor="middle">car 汽车</text>
+        <line x1="240" y1="180" x2="240" y2="225" stroke="var(--f-red)" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+        <text x="260" y="206" fill="var(--f-red)" font-size="10" font-family="Space Mono">W ↓</text>
+        <line x1="240" y1="110" x2="240" y2="65" stroke="var(--f-blue)" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+        <text x="252" y="90" fill="var(--f-blue)" font-size="10" font-family="Space Mono">N ↑</text>
+        <!-- Drive force right -->
+        <line x1="305" y1="145" x2="380" y2="145" stroke="var(--f-green)" stroke-width="2.5" marker-end="url(#arrowGreen)"/>
+        <text x="390" y="140" fill="var(--f-green)" font-size="10" font-family="Space Mono">Drive →</div>
+        <text x="390" y="155" fill="rgba(74,222,128,0.6)" font-size="9" font-family="Noto Sans SC">驱动力</text>
+        <!-- Friction left -->
+        <line x1="175" y1="145" x2="100" y2="145" stroke="var(--f-orange)" stroke-width="2.5" marker-end="url(#arrowOrange)"/>
+        <text x="20" y="140" fill="var(--f-orange)" font-size="10" font-family="Space Mono">← Drag</text>
+        <text x="20" y="155" fill="rgba(251,146,60,0.6)" font-size="9" font-family="Noto Sans SC">阻力</text>
+        <line x1="100" y1="182" x2="400" y2="182" stroke="rgba(238,242,248,0.3)" stroke-width="2"/>
+        <text x="240" y="252" fill="var(--f-yellow)" font-size="11" font-family="Space Mono" text-anchor="middle">Resultant = 0 → Constant v</text>
+        <text x="240" y="264" fill="rgba(253,224,71,0.6)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">合力=0，速度不变</text>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Constant Velocity — Balanced Forces 匀速——平衡力</div>
+        <div class="fbd-rule">• Drive force = Drag/friction: Resultant = 0, so velocity stays constant 驱动力=阻力，合力=0，速度不变</div>
+        <div class="fbd-rule">• This is Newton's 1st Law: no resultant force = no change in motion 这是牛顿第一定律</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• 匀速运动不需要合力。需要合力才能改变速度。</div>
+      </div>
+    </div>
+
+    <!-- ACCELERATING -->
+    <div class="fbd-diagram" id="fbd-accel">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;height:auto;display:block;margin:0 auto;">
+        <rect x="175" y="110" width="130" height="70" rx="6" fill="rgba(74,222,128,0.12)" stroke="var(--f-green)" stroke-width="2"/>
+        <text x="240" y="150" fill="var(--f-green)" font-size="11" font-family="Space Mono" text-anchor="middle">car 汽车</text>
+        <line x1="240" y1="180" x2="240" y2="225" stroke="var(--f-red)" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+        <line x1="240" y1="110" x2="240" y2="65" stroke="var(--f-blue)" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+        <!-- Larger drive force -->
+        <line x1="305" y1="145" x2="420" y2="145" stroke="var(--f-green)" stroke-width="3" marker-end="url(#arrowGreen)"/>
+        <text x="432" y="140" fill="var(--f-green)" font-size="10" font-family="Space Mono">Drive →</text>
+        <!-- Smaller friction -->
+        <line x1="175" y1="145" x2="120" y2="145" stroke="var(--f-orange)" stroke-width="2" marker-end="url(#arrowOrange)"/>
+        <text x="60" y="140" fill="var(--f-orange)" font-size="10" font-family="Space Mono">← Drag</text>
+        <!-- Resultant arrow -->
+        <line x1="310" y1="165" x2="380" y2="165" stroke="var(--f-yellow)" stroke-width="2" marker-end="url(#arrowYellow)" stroke-dasharray="5,3"/>
+        <text x="345" y="178" fill="var(--f-yellow)" font-size="10" font-family="Space Mono" text-anchor="middle">Resultant →</text>
+        <line x1="100" y1="182" x2="400" y2="182" stroke="rgba(238,242,248,0.3)" stroke-width="2"/>
+        <text x="240" y="252" fill="var(--f-yellow)" font-size="11" font-family="Space Mono" text-anchor="middle">Resultant > 0 → Acceleration</text>
+        <text x="240" y="264" fill="rgba(253,224,71,0.6)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">合力>0，产生加速度 a = F/m</text>
+        <defs><marker id="arrowYellow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-yellow)"/></marker></defs>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Accelerating — Unbalanced Forces 加速——不平衡力</div>
+        <div class="fbd-rule">• Drive force &gt; Drag: Resultant force acts forward → acceleration (Newton's 2nd Law: F = ma) 驱动力>阻力：合力向前→加速度</div>
+        <div class="fbd-rule">• a = F/m: larger resultant or smaller mass = greater acceleration 合力越大或质量越小=加速度越大</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• 若驱动力小于阻力，合力向后，产生减速（负加速度）。</div>
+      </div>
+    </div>
+
+    <!-- TERMINAL VELOCITY -->
+    <div class="fbd-diagram" id="fbd-falling">
+      <svg viewBox="0 0 500 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;height:auto;display:block;margin:0 auto;">
+        <!-- Three stages -->
+        <!-- Stage 1: just dropped -->
+        <text x="80" y="30" fill="var(--muted)" font-size="10" font-family="Space Mono" text-anchor="middle">Just dropped</text>
+        <text x="80" y="42" fill="rgba(238,242,248,0.35)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">刚落下</text>
+        <circle cx="80" cy="80" r="22" fill="rgba(74,222,128,0.12)" stroke="var(--f-green)" stroke-width="2"/>
+        <line x1="80" y1="102" x2="80" y2="140" stroke="var(--f-red)" stroke-width="3" marker-end="url(#arrowRed)"/>
+        <text x="96" y="122" fill="var(--f-red)" font-size="9" font-family="Space Mono">W</text>
+        <line x1="80" y1="58" x2="80" y2="48" stroke="var(--f-orange)" stroke-width="1.5" marker-end="url(#arrowOrange)"/>
+        <text x="96" y="52" fill="var(--f-orange)" font-size="9" font-family="Space Mono">D (small)</text>
+        <text x="80" y="158" fill="var(--f-yellow)" font-size="9" font-family="Space Mono" text-anchor="middle">a &gt; 0</text>
+        <!-- Stage 2: gaining speed -->
+        <text x="250" y="30" fill="var(--muted)" font-size="10" font-family="Space Mono" text-anchor="middle">Speeding up</text>
+        <text x="250" y="42" fill="rgba(238,242,248,0.35)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">加速阶段</text>
+        <circle cx="250" cy="80" r="22" fill="rgba(74,222,128,0.12)" stroke="var(--f-green)" stroke-width="2"/>
+        <line x1="250" y1="102" x2="250" y2="140" stroke="var(--f-red)" stroke-width="3" marker-end="url(#arrowRed)"/>
+        <line x1="250" y1="58" x2="250" y2="30" stroke="var(--f-orange)" stroke-width="2.5" marker-end="url(#arrowOrange)"/>
+        <text x="265" y="48" fill="var(--f-orange)" font-size="9" font-family="Space Mono">D (bigger)</text>
+        <text x="250" y="158" fill="var(--f-yellow)" font-size="9" font-family="Space Mono" text-anchor="middle">a decreasing</text>
+        <!-- Stage 3: terminal velocity -->
+        <text x="420" y="30" fill="var(--muted)" font-size="10" font-family="Space Mono" text-anchor="middle">Terminal v</text>
+        <text x="420" y="42" fill="rgba(238,242,248,0.35)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">终端速度</text>
+        <circle cx="420" cy="80" r="22" fill="rgba(74,222,128,0.12)" stroke="var(--f-green)" stroke-width="2"/>
+        <line x1="420" y1="102" x2="420" y2="130" stroke="var(--f-red)" stroke-width="3" marker-end="url(#arrowRed)"/>
+        <line x1="420" y1="58" x2="420" y2="30" stroke="var(--f-orange)" stroke-width="3" marker-end="url(#arrowOrange)"/>
+        <text x="420" y="148" fill="var(--f-green)" font-size="10" font-family="Space Mono" text-anchor="middle">D = W</text>
+        <text x="420" y="162" fill="var(--f-yellow)" font-size="9" font-family="Space Mono" text-anchor="middle">a = 0</text>
+        <!-- Arrows between stages -->
+        <text x="165" y="82" fill="rgba(238,242,248,0.3)" font-size="18" text-anchor="middle">→</text>
+        <text x="335" y="82" fill="rgba(238,242,248,0.3)" font-size="18" text-anchor="middle">→</text>
+        <!-- Speed profile -->
+        <path d="M40,220 C70,220 90,215 120,208 C155,200 180,196 220,194 C260,193 300,193 440,193" fill="none" stroke="var(--f-green)" stroke-width="2.5"/>
+        <line x1="30" y1="230" x2="450" y2="230" stroke="rgba(238,242,248,0.2)" stroke-width="1"/>
+        <line x1="30" y1="175" x2="30" y2="240" stroke="rgba(238,242,248,0.2)" stroke-width="1"/>
+        <text x="240" y="248" fill="var(--muted)" font-size="10" font-family="Space Mono" text-anchor="middle">time →</text>
+        <text x="10" y="200" fill="var(--muted)" font-size="10" font-family="Space Mono" text-anchor="middle" transform="rotate(-90,10,200)">speed</text>
+        <text x="400" y="188" fill="var(--f-green)" font-size="9" font-family="Space Mono">terminal v</text>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Terminal Velocity — Drag = Weight 终端速度——阻力=重力</div>
+        <div class="fbd-rule">• At first: Weight &gt; Drag → accelerates downward 开始：重力>阻力→向下加速</div>
+        <div class="fbd-rule">• As speed increases, drag increases until Drag = Weight: resultant = 0 → terminal velocity 速度增大，阻力增大直到阻力=重力：合力=0→终端速度</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• 速度-时间图：斜率（加速度）逐渐减小到零，速度变为恒定。</div>
+      </div>
+    </div>
+
+    <!-- SPRING -->
+    <div class="fbd-diagram" id="fbd-spring">
+      <svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;height:auto;display:block;margin:0 auto;">
+        <!-- Natural length -->
+        <text x="120" y="30" fill="var(--muted)" font-size="11" font-family="Space Mono" text-anchor="middle">Natural length</text>
+        <text x="120" y="44" fill="rgba(238,242,248,0.35)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">自然长度</text>
+        <line x1="120" y1="50" x2="120" y2="60" stroke="rgba(238,242,248,0.4)" stroke-width="2"/>
+        <path d="M120,60 C110,65 130,72 120,79 C110,86 130,93 120,100 C110,107 130,114 120,121 C110,128 130,135 120,142" fill="none" stroke="var(--f-blue)" stroke-width="2.5"/>
+        <line x1="120" y1="142" x2="120" y2="155" stroke="rgba(238,242,248,0.4)" stroke-width="2"/>
+        <rect x="100" y="155" width="40" height="30" rx="3" fill="rgba(96,165,250,0.15)" stroke="var(--f-blue)" stroke-width="1.5"/>
+        <!-- Extended -->
+        <text x="350" y="30" fill="var(--muted)" font-size="11" font-family="Space Mono" text-anchor="middle">Extended (F = ke)</text>
+        <text x="350" y="44" fill="rgba(238,242,248,0.35)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">伸长（F = ke）</text>
+        <line x1="350" y1="50" x2="350" y2="60" stroke="rgba(238,242,248,0.4)" stroke-width="2"/>
+        <path d="M350,60 C340,68 360,78 350,88 C340,98 360,108 350,118 C340,128 360,138 350,148 C340,158 360,168 350,178 C340,188 360,198 350,205" fill="none" stroke="var(--f-orange)" stroke-width="2.5"/>
+        <line x1="350" y1="205" x2="350" y2="215" stroke="rgba(238,242,248,0.4)" stroke-width="2"/>
+        <rect x="330" y="215" width="40" height="30" rx="3" fill="rgba(251,146,60,0.15)" stroke="var(--f-orange)" stroke-width="1.5"/>
+        <!-- Extension arrow -->
+        <line x1="270" y1="155" x2="270" y2="215" stroke="var(--f-yellow)" stroke-width="1.5" marker-end="url(#arrowYellow)" marker-start="url(#arrowYellowR)"/>
+        <text x="255" y="188" fill="var(--f-yellow)" font-size="11" font-family="Space Mono" text-anchor="middle">e</text>
+        <defs><marker id="arrowYellowR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-yellow)"/></marker></defs>
+        <!-- Force arrow down -->
+        <line x1="350" y1="245" x2="350" y2="260" stroke="var(--f-red)" stroke-width="2" marker-end="url(#arrowRed)"/>
+        <text x="368" y="255" fill="var(--f-red)" font-size="10" font-family="Space Mono">F = ke</text>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Hooke's Law — Spring Extension 胡克定律——弹簧伸长</div>
+        <div class="fbd-rule">• F = ke: force is proportional to extension up to the limit of proportionality 力与伸长量成正比（在比例极限内）</div>
+        <div class="fbd-rule">• Elastic deformation: spring returns to original length when force removed 弹性形变：力移除后弹簧恢复原长</div>
+        <div class="fbd-rule">• Ee = ½ke² (given on sheet): energy stored in a stretched spring 弹性势能（公式给出）</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• 超过比例极限后，力与伸长量不再成正比（非弹性形变）。</div>
+      </div>
+    </div>
+
+    <!-- MOMENT -->
+    <div class="fbd-diagram" id="fbd-moment">
+      <svg viewBox="0 0 500 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:500px;height:auto;display:block;margin:0 auto;">
+        <!-- Beam -->
+        <rect x="80" y="105" width="340" height="12" rx="3" fill="rgba(74,222,128,0.15)" stroke="var(--f-green)" stroke-width="2"/>
+        <!-- Pivot -->
+        <polygon points="250,117 235,145 265,145" fill="rgba(253,224,71,0.3)" stroke="var(--f-yellow)" stroke-width="2"/>
+        <text x="250" y="160" fill="var(--f-yellow)" font-size="10" font-family="Space Mono" text-anchor="middle">pivot 支点</text>
+        <!-- Left force (anticlockwise) -->
+        <line x1="140" y1="105" x2="140" y2="50" stroke="var(--f-blue)" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+        <text x="110" y="75" fill="var(--f-blue)" font-size="10" font-family="Space Mono">F1 ↑</text>
+        <!-- Right force (clockwise) -->
+        <line x1="370" y1="105" x2="370" y2="170" stroke="var(--f-red)" stroke-width="2.5" marker-end="url(#arrowRed)"/>
+        <text x="380" y="145" fill="var(--f-red)" font-size="10" font-family="Space Mono">F2 ↓</text>
+        <!-- Distance d1 -->
+        <line x1="140" y1="180" x2="250" y2="180" stroke="var(--f-blue)" stroke-width="1.5" marker-end="url(#arrowBlue)" marker-start="url(#arrowBlueR)"/>
+        <text x="195" y="195" fill="var(--f-blue)" font-size="10" font-family="Space Mono" text-anchor="middle">d1</text>
+        <!-- Distance d2 -->
+        <line x1="250" y1="200" x2="370" y2="200" stroke="var(--f-red)" stroke-width="1.5" marker-end="url(#arrowRed)" marker-start="url(#arrowRedR)"/>
+        <text x="310" y="215" fill="var(--f-red)" font-size="10" font-family="Space Mono" text-anchor="middle">d2</text>
+        <!-- Balance equation -->
+        <text x="250" y="35" fill="var(--f-yellow)" font-size="11" font-family="Space Mono" text-anchor="middle">F1 × d1 = F2 × d2</text>
+        <text x="250" y="50" fill="rgba(253,224,71,0.6)" font-size="10" font-family="Noto Sans SC" text-anchor="middle">逆时针力矩 = 顺时针力矩</text>
+        <defs>
+          <marker id="arrowBlueR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-blue)"/></marker>
+          <marker id="arrowRedR" markerWidth="8" markerHeight="8" refX="2" refY="3" orient="auto-start-reverse"><path d="M0,0 L0,6 L8,3 z" fill="var(--f-red)"/></marker>
+        </defs>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Moment of a Force — Levers 力矩——杠杆</div>
+        <div class="fbd-rule">• Moment = Force × perpendicular distance from pivot (M = Fd) 力矩=力×从支点的垂直距离</div>
+        <div class="fbd-rule">• Balanced: total clockwise moments = total anticlockwise moments 平衡：顺时针力矩=逆时针力矩</div>
+        <div class="fbd-rule">• A lever can multiply force by using a longer distance on one side 杠杆通过一侧使用较长距离来放大力</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• d是从支点到力的作用线的垂直距离，不是沿横梁的距离。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MOTION GRAPHS ══ -->
+<div class="section" id="section-motion">
+  <div class="section-title">Motion Graphs</div>
+  <div class="section-cn">运动图 — Click a tab to explore · 点击标签探索</div>
+
+  <div class="fbd-box">
+    <div class="fbd-tabs">
+      <div class="fbd-tab active" onclick="showMotion(event,'dt')">Distance-Time<span class="cn">距离-时间图</span></div>
+      <div class="fbd-tab" onclick="showMotion(event,'vt')">Velocity-Time<span class="cn">速度-时间图</span></div>
+    </div>
+
+    <!-- DISTANCE-TIME -->
+    <div class="fbd-diagram active" id="motion-dt">
+      <svg viewBox="0 0 560 260" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;height:auto;display:block;margin:0 auto;">
+        <line x1="40" y1="220" x2="530" y2="220" stroke="rgba(238,242,248,0.3)" stroke-width="1.5" marker-end="url(#arrowGrey)"/>
+        <line x1="40" y1="220" x2="40" y2="20" stroke="rgba(238,242,248,0.3)" stroke-width="1.5" marker-end="url(#arrowGrey)"/>
+        <text x="290" y="242" fill="var(--muted)" font-size="11" font-family="Space Mono" text-anchor="middle">time (s) 时间</text>
+        <text x="15" y="120" fill="var(--muted)" font-size="10" font-family="Space Mono" text-anchor="middle" transform="rotate(-90,15,120)">distance (m)</text>
+        <!-- Stationary (horizontal) -->
+        <line x1="50" y1="180" x2="130" y2="180" stroke="var(--f-blue)" stroke-width="2.5"/>
+        <text x="90" y="172" fill="var(--f-blue)" font-size="10" font-family="Space Mono" text-anchor="middle">stationary</text>
+        <text x="90" y="162" fill="rgba(96,165,250,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">静止</text>
+        <!-- Constant speed (straight line) -->
+        <line x1="130" y1="180" x2="280" y2="80" stroke="var(--f-green)" stroke-width="2.5"/>
+        <text x="215" y="120" fill="var(--f-green)" font-size="10" font-family="Space Mono" text-anchor="middle">constant speed</text>
+        <text x="215" y="132" fill="rgba(74,222,128,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">匀速（直线）</text>
+        <!-- Accelerating (curve) -->
+        <path d="M280,80 C310,75 340,60 400,30" fill="none" stroke="var(--f-orange)" stroke-width="2.5"/>
+        <text x="350" y="55" fill="var(--f-orange)" font-size="10" font-family="Space Mono" text-anchor="middle">accelerating</text>
+        <text x="350" y="67" fill="rgba(251,146,60,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">加速（曲线）</text>
+        <!-- slope label -->
+        <text x="440" y="150" fill="var(--f-yellow)" font-size="10" font-family="Space Mono" text-anchor="middle">Gradient =</text>
+        <text x="440" y="164" fill="var(--f-yellow)" font-size="10" font-family="Space Mono" text-anchor="middle">speed 速率</text>
+        <defs><marker id="arrowGrey" markerWidth="7" markerHeight="7" refX="5" refY="3" orient="auto"><path d="M0,0 L0,6 L7,3 z" fill="rgba(238,242,248,0.3)"/></marker></defs>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Distance-Time Graph — Key Rules 距离-时间图——关键规则</div>
+        <div class="fbd-rule">• <strong>Gradient</strong> (slope) = speed 斜率=速率</div>
+        <div class="fbd-rule">• Horizontal line = stationary (speed = 0) 水平线=静止（速率=0）</div>
+        <div class="fbd-rule">• Straight diagonal line = constant speed 直斜线=匀速</div>
+        <div class="fbd-rule">• Curve = changing speed (accelerating or decelerating) 曲线=速率变化（加速或减速）</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• 距离-时间图的斜率越陡，速率越大。</div>
+      </div>
+    </div>
+
+    <!-- VELOCITY-TIME -->
+    <div class="fbd-diagram" id="motion-vt">
+      <svg viewBox="0 0 560 270" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:560px;height:auto;display:block;margin:0 auto;">
+        <line x1="40" y1="180" x2="530" y2="180" stroke="rgba(238,242,248,0.3)" stroke-width="1.5" marker-end="url(#arrowGrey)"/>
+        <line x1="40" y1="240" x2="40" y2="20" stroke="rgba(238,242,248,0.3)" stroke-width="1.5" marker-end="url(#arrowGrey)"/>
+        <text x="290" y="258" fill="var(--muted)" font-size="11" font-family="Space Mono" text-anchor="middle">time (s) 时间</text>
+        <text x="15" y="130" fill="var(--muted)" font-size="10" font-family="Space Mono" text-anchor="middle" transform="rotate(-90,15,130)">velocity (m/s)</text>
+        <!-- Constant velocity (horizontal) -->
+        <line x1="50" y1="120" x2="150" y2="120" stroke="var(--f-blue)" stroke-width="2.5"/>
+        <text x="100" y="110" fill="var(--f-blue)" font-size="10" font-family="Space Mono" text-anchor="middle">const. v</text>
+        <text x="100" y="100" fill="rgba(96,165,250,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">匀速</text>
+        <!-- Uniform acceleration (straight line up) -->
+        <line x1="150" y1="120" x2="280" y2="50" stroke="var(--f-green)" stroke-width="2.5"/>
+        <text x="225" y="75" fill="var(--f-green)" font-size="10" font-family="Space Mono" text-anchor="middle">uniform accel.</text>
+        <text x="225" y="87" fill="rgba(74,222,128,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">匀加速（直线）</text>
+        <!-- Deceleration (line down to zero) -->
+        <line x1="280" y1="50" x2="390" y2="180" stroke="var(--f-orange)" stroke-width="2.5"/>
+        <text x="350" y="105" fill="var(--f-orange)" font-size="10" font-family="Space Mono" text-anchor="middle">decelerating</text>
+        <text x="350" y="117" fill="rgba(251,146,60,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">减速</text>
+        <!-- Area shading (distance) -->
+        <polygon points="150,120 280,50 280,180 150,180" fill="rgba(74,222,128,0.07)" stroke="none"/>
+        <text x="215" y="165" fill="rgba(74,222,128,0.5)" font-size="9" font-family="Space Mono" text-anchor="middle">area = distance</text>
+        <text x="215" y="176" fill="rgba(74,222,128,0.4)" font-size="8" font-family="Noto Sans SC" text-anchor="middle">面积=距离</text>
+        <!-- Gradient label -->
+        <text x="460" y="80" fill="var(--f-yellow)" font-size="10" font-family="Space Mono" text-anchor="middle">Gradient =</text>
+        <text x="460" y="94" fill="var(--f-yellow)" font-size="10" font-family="Space Mono" text-anchor="middle">acceleration</text>
+        <text x="460" y="108" fill="rgba(253,224,71,0.6)" font-size="9" font-family="Noto Sans SC" text-anchor="middle">斜率=加速度</text>
+      </svg>
+      <div class="fbd-info">
+        <div class="fbd-title">Velocity-Time Graph — Key Rules 速度-时间图——关键规则</div>
+        <div class="fbd-rule">• <strong>Gradient</strong> = acceleration 斜率=加速度 (positive gradient = speeding up, negative = slowing down)</div>
+        <div class="fbd-rule">• <strong>Area under graph</strong> = distance travelled 图像下方面积=位移</div>
+        <div class="fbd-rule">• Horizontal line = constant velocity (zero acceleration) 水平线=匀速（加速度=0）</div>
+        <div class="fbd-rule">• Straight line with positive gradient = uniform acceleration 正斜率直线=匀加速</div>
+        <div class="fbd-rule" style="color:rgba(96,165,250,0.7)">• 对于非均匀加速（曲线），用切线的斜率求某点的加速度。面积可用数格子法估算。</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ EQUATIONS ══ -->
+<div class="section" id="section-equations">
+  <div class="section-title">Equations</div>
+  <div class="section-cn">公式 — AQA 4.5 has the most equations of any topic · 本章节公式最多</div>
+
+  <div style="background:rgba(74,222,128,0.07);border:1px solid rgba(74,222,128,0.2);border-radius:10px;padding:11px 17px;margin-bottom:16px;font-size:0.8rem;color:rgba(238,242,248,0.62);line-height:1.6;">
+    <span style="background:rgba(248,113,113,0.15);border:1px solid rgba(248,113,113,0.3);color:var(--f-red);font-family:'Space Mono',monospace;font-size:0.65rem;padding:2px 6px;border-radius:7px;">MUST RECALL</span> = memorise.
+    <span style="background:rgba(74,222,128,0.12);border:1px solid rgba(74,222,128,0.28);color:var(--f-green);font-family:'Space Mono',monospace;font-size:0.65rem;padding:2px 6px;border-radius:7px;">GIVEN</span> = on equation sheet.
+    <span class="ht-badge">HT</span> = Higher Tier only.
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Weight 重力 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.1.3</div>
+    <div class="eq-formula">W = m × g</div>
+    <div class="eq-vars"><span>W</span> = weight 重力 (N)<br><span>m</span> = mass 质量 (kg)<br><span>g</span> = gravitational field strength 引力场强度 (N/kg) — given in exam 考试给出</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">An object has a mass of 8 kg. g = 10 N/kg. Calculate its weight.<br><span class="step">W = m × g = 8 × 10 = 80 N</span></div>
+      <div class="we-cn">一个物体质量为8 kg，g = 10 N/kg。计算它的重力。W = 8 × 10 = 80 N</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Work Done 做功 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.2</div>
+    <div class="eq-formula">W = F × s</div>
+    <div class="eq-vars"><span>W</span> = work done 做功 (J, joules 焦耳)<br><span>F</span> = force 力 (N)<br><span>s</span> = distance moved in the direction of the force 沿力的方向的位移 (m)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">A force of 50 N moves a box 4 m. Calculate work done.<br><span class="step">W = F × s = 50 × 4 = 200 J</span></div>
+      <div class="we-cn">50 N的力使箱子移动了4 m。计算做功。W = 50 × 4 = 200 J</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Hooke's Law 胡克定律 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.3</div>
+    <div class="eq-formula">F = k × e</div>
+    <div class="eq-vars"><span>F</span> = force 力 (N)<br><span>k</span> = spring constant 弹簧常数 (N/m)<br><span>e</span> = extension 伸长量 (m)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">A spring (k = 40 N/m) is extended by 0.05 m. Find the force.<br><span class="step">F = k × e = 40 × 0.05 = 2 N</span></div>
+      <div class="we-cn">弹簧（k = 40 N/m）伸长0.05 m。求力。F = 40 × 0.05 = 2 N</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Elastic Potential Energy 弹性势能 <span class="eq-badge given">GIVEN</span></div>
+    <div class="spec-ref">AQA 4.5.3</div>
+    <div class="eq-formula">Ee = ½ × k × e²</div>
+    <div class="eq-vars"><span>Ee</span> = elastic potential energy 弹性势能 (J)<br><span>k</span> = spring constant 弹簧常数 (N/m)<br><span>e</span> = extension 伸长量 (m)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">k = 50 N/m, extension = 0.1 m. Find Ee.<br><span class="step">Ee = ½ × 50 × 0.1² = 0.5 × 50 × 0.01 = 0.25 J</span></div>
+      <div class="we-cn">k = 50 N/m，伸长量 = 0.1 m。求Ee。Ee = ½ × 50 × 0.01 = 0.25 J</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Moment of a Force 力矩 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.4 (Physics only)</div>
+    <div class="eq-formula">M = F × d</div>
+    <div class="eq-vars"><span>M</span> = moment 力矩 (N·m, newton-metres 牛顿米)<br><span>F</span> = force 力 (N)<br><span>d</span> = perpendicular distance from pivot 从支点的垂直距离 (m)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">A 30 N force acts 0.4 m from a pivot. Calculate the moment.<br><span class="step">M = F × d = 30 × 0.4 = 12 N·m</span></div>
+      <div class="we-cn">30 N的力作用在距支点0.4 m处。计算力矩。M = 30 × 0.4 = 12 N·m</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Pressure 压强 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.5.1 (Physics only)</div>
+    <div class="eq-formula">p = F / A</div>
+    <div class="eq-vars"><span>p</span> = pressure 压强 (Pa, pascals 帕斯卡)<br><span>F</span> = force normal to surface 垂直于表面的力 (N)<br><span>A</span> = area 面积 (m²)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">A force of 600 N acts on an area of 0.3 m². Find the pressure.<br><span class="step">p = F/A = 600/0.3 = 2000 Pa</span></div>
+      <div class="we-cn">600 N的力作用在0.3 m²的面积上。求压强。p = 600/0.3 = 2000 Pa</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Pressure in a Liquid Column 液柱压强 <span class="eq-badge given">GIVEN</span> <span class="ht-badge">HT</span></div>
+    <div class="spec-ref">AQA 4.5.5.1.2 (Physics only, HT)</div>
+    <div class="eq-formula">p = h × ρ × g</div>
+    <div class="eq-vars"><span>p</span> = pressure 压强 (Pa)<br><span>h</span> = height of liquid column 液柱高度 (m)<br><span>ρ</span> = density of liquid 液体密度 (kg/m³)<br><span>g</span> = gravitational field strength 引力场强度 (N/kg)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">Water (ρ = 1000 kg/m³) at depth 3 m. g = 10 N/kg. Find pressure.<br><span class="step">p = h × ρ × g = 3 × 1000 × 10 = 30,000 Pa</span></div>
+      <div class="we-cn">水（ρ = 1000 kg/m³）深度3 m，g = 10 N/kg。求压强。p = 3 × 1000 × 10 = 30,000 Pa</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Speed / Velocity 速率/速度 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.6.1</div>
+    <div class="eq-formula">v = d / t</div>
+    <div class="eq-vars"><span>v</span> = speed or velocity 速率或速度 (m/s)<br><span>d</span> = distance 距离 (m)<br><span>t</span> = time 时间 (s)</div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Acceleration 加速度 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.6.2</div>
+    <div class="eq-formula">a = (v − u) / t</div>
+    <div class="eq-vars"><span>a</span> = acceleration 加速度 (m/s²)<br><span>v</span> = final velocity 末速度 (m/s)<br><span>u</span> = initial velocity 初速度 (m/s)<br><span>t</span> = time 时间 (s)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">A car goes from 10 m/s to 25 m/s in 5 s. Find acceleration.<br><span class="step">a = (v-u)/t = (25-10)/5 = 15/5 = 3 m/s²</span></div>
+      <div class="we-cn">一辆汽车在5秒内从10 m/s加速到25 m/s。求加速度。a = (25-10)/5 = 3 m/s²</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Newton's Second Law 牛顿第二定律 <span class="eq-badge recall">MUST RECALL</span></div>
+    <div class="spec-ref">AQA 4.5.6.2</div>
+    <div class="eq-formula">F = m × a</div>
+    <div class="eq-vars"><span>F</span> = resultant force 合力 (N)<br><span>m</span> = mass 质量 (kg)<br><span>a</span> = acceleration 加速度 (m/s²)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">A 1200 kg car accelerates at 3 m/s². Find the resultant force.<br><span class="step">F = m × a = 1200 × 3 = 3600 N</span></div>
+      <div class="we-cn">一辆1200 kg的汽车以3 m/s²加速。求合力。F = 1200 × 3 = 3600 N</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">v² = u² + 2as <span class="eq-badge given">GIVEN</span> <span class="ht-badge">HT</span></div>
+    <div class="spec-ref">AQA 4.5.6.2 (HT)</div>
+    <div class="eq-formula">v² = u² + 2 × a × s</div>
+    <div class="eq-vars"><span>v</span> = final velocity 末速度 (m/s)<br><span>u</span> = initial velocity 初速度 (m/s)<br><span>a</span> = acceleration 加速度 (m/s²)<br><span>s</span> = displacement 位移 (m)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">u = 5 m/s, a = 2 m/s², s = 50 m. Find v.<br><span class="step">v² = 5² + 2×2×50 = 25 + 200 = 225 → v = 15 m/s</span></div>
+      <div class="we-cn">u = 5 m/s，a = 2 m/s²，s = 50 m。求v。v² = 25 + 200 = 225，v = 15 m/s</div>
+    </div>
+  </div>
+
+  <div class="eq-card">
+    <div class="eq-name">Momentum 动量 <span class="eq-badge recall">MUST RECALL</span> <span class="ht-badge">HT</span></div>
+    <div class="spec-ref">AQA 4.5.7 (HT)</div>
+    <div class="eq-formula">p = m × v</div>
+    <div class="eq-vars"><span>p</span> = momentum 动量 (kg·m/s)<br><span>m</span> = mass 质量 (kg)<br><span>v</span> = velocity 速度 (m/s)</div>
+    <div class="worked-ex"><div class="we-title">WORKED EXAMPLE 解题示例</div>
+      <div class="we-body">A 0.5 kg ball moves at 8 m/s. Find momentum.<br><span class="step">p = m × v = 0.5 × 8 = 4 kg·m/s</span></div>
+      <div class="we-cn">0.5 kg的球以8 m/s运动。求动量。p = 0.5 × 8 = 4 kg·m/s</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ GLOSSARY ══ -->
+<div class="section" id="section-glossary">
+  <div class="section-title">Full Glossary</div>
+  <div class="section-cn">完整词汇表 — Search in English or Chinese · 用英文或中文搜索</div>
+  <input type="text" class="search-box" id="glossarySearch" placeholder="Search / 搜索..." oninput="filterGlossary()">
+  <table class="glossary-table">
+    <thead><tr><th>English Term</th><th>中文 / Pinyin</th><th>Definition 定义</th></tr></thead>
+    <tbody id="glossaryBody"></tbody>
+  </table>
+</div>
+
+<!-- ══ QUIZ ══ -->
+<div class="section" id="section-quiz">
+  <div class="section-title">Revision Quiz</div>
+  <div class="section-cn">复习测验 — 12 questions covering AQA 4.5 · 12道AQA力学题</div>
+  <div class="quiz-container">
+    <div id="quizActive">
+      <div class="quiz-progress">
+        <div class="progress-text" id="qProgress">Q1 / 12</div>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:8%"></div></div>
+        <div class="score-display" id="scoreDisplay">Score: 0</div>
+      </div>
+      <div class="question-box">
+        <div class="question-text" id="questionText"></div>
+        <div class="question-cn" id="questionCN"></div>
+      </div>
+      <div class="options-grid" id="optionsGrid"></div>
+      <div class="feedback-box" id="feedbackBox"></div>
+      <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next Question &#8594; 下一题</button>
+    </div>
+    <div class="quiz-result" id="quizResult">
+      <div class="result-score" id="resultScore"></div>
+      <div class="result-msg" id="resultMsg"></div>
+      <div class="result-cn" id="resultCN"></div>
+      <button class="restart-btn" onclick="restartQuiz()">Restart Quiz 重新开始</button>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function showTab(e,id){document.querySelectorAll('.section').forEach(function(s){s.classList.remove('active');});document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});document.getElementById('section-'+id).classList.add('active');e.currentTarget.classList.add('active');}
+function toggleCard(card){card.classList.toggle('expanded');}
+
+function showFBD(e,key){document.querySelectorAll('.fbd-tab').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.fbd-diagram').forEach(function(d){d.classList.remove('active');});e.currentTarget.classList.add('active');document.getElementById('fbd-'+key).classList.add('active');}
+function showMotion(e,key){document.querySelectorAll('.fbd-tab').forEach(function(t){t.classList.remove('active');});document.querySelectorAll('.fbd-diagram').forEach(function(d){d.classList.remove('active');});e.currentTarget.classList.add('active');document.getElementById('motion-'+key).classList.add('active');}
+
+var glossaryData=[
+  {en:'Scalar',cn:'标量',py:'biāo liàng',def:'A quantity with magnitude only. Examples: speed, distance, mass, time, temperature.',defCN:'只有大小的量。例子：速率、距离、质量、时间、温度。'},
+  {en:'Vector',cn:'矢量',py:'shǐ liàng',def:'A quantity with both magnitude and direction. Examples: force, velocity, displacement, acceleration, momentum.',defCN:'既有大小又有方向的量。例子：力、速度、位移、加速度、动量。'},
+  {en:'Contact Force',cn:'接触力',py:'jiē chù lì',def:'A force that acts between objects that are physically touching. Examples: friction, tension, normal contact force, air resistance.',defCN:'作用于物理接触物体之间的力。例子：摩擦力、张力、法向接触力、空气阻力。'},
+  {en:'Non-contact Force',cn:'非接触力',py:'fēi jiē chù lì',def:'A force that acts between physically separated objects. Examples: gravitational force, electrostatic force, magnetic force.',defCN:'作用于物理分离物体之间的力。例子：引力、静电力、磁力。'},
+  {en:'Weight',cn:'重力',py:'zhòng lì',def:'The force on an object due to gravity. W = mg. Measured in newtons. Acts at the centre of mass.',defCN:'物体受到的引力。W = mg。用牛顿测量。作用于质心。'},
+  {en:'Mass',cn:'质量',py:'zhì liàng',def:'The amount of matter in an object (kg). A scalar. Stays the same everywhere — unlike weight.',defCN:'物体中物质的量（千克）。标量。在任何地方都相同——与重力不同。'},
+  {en:'Resultant Force',cn:'合力',py:'hé lì',def:'The single force that has the same effect as all forces combined. If zero, the object is in equilibrium.',defCN:'与所有力合并后效果相同的单一力。若为零，物体处于平衡状态。'},
+  {en:'Work Done',cn:'做功',py:'zuò gōng',def:'Energy transferred when a force causes movement. W = Fs. Unit: joule (J). 1 J = 1 N moved 1 m.',defCN:'力使物体移动时转移的能量。W = Fs。单位：焦耳（J）。1 J = 1 N移动1 m。'},
+  {en:'Elastic Deformation',cn:'弹性形变',py:'tán xìng xíng biàn',def:'When an object returns to its original shape after the deforming force is removed.',defCN:'当形变力移除后，物体恢复原来形状。'},
+  {en:'Inelastic Deformation',cn:'非弹性形变',py:'fēi tán xìng xíng biàn',def:'When an object does NOT return to its original shape after the deforming force is removed (permanently changed).',defCN:'当形变力移除后，物体不能恢复原来形状（永久改变）。'},
+  {en:'Spring Constant (k)',cn:'弹簧常数',py:'tán huáng cháng shù',def:'A measure of the stiffness of a spring. k = F/e. Unit: N/m. Higher k = stiffer spring.',defCN:'弹簧刚度的量度。k = F/e。单位：N/m。k越大=弹簧越硬。'},
+  {en:'Limit of Proportionality',cn:'比例极限',py:'bǐ lì jí xiàn',def:'The maximum force beyond which extension is no longer proportional to force (Hooke\'s Law no longer applies).',defCN:'超过此力后，伸长量不再与力成正比（胡克定律不再适用）。'},
+  {en:'Moment',cn:'力矩',py:'lì jǔ',def:'The turning effect of a force. M = Fd, where d is the perpendicular distance from the pivot. Unit: N·m.',defCN:'力的转动效应。M = Fd，其中d是从支点的垂直距离。单位：N·m。'},
+  {en:'Pressure',cn:'压强',py:'yā qiáng',def:'Force per unit area. p = F/A. Unit: pascal (Pa). 1 Pa = 1 N/m².',defCN:'单位面积上的力。p = F/A。单位：帕斯卡（Pa）。1 Pa = 1 N/m²。'},
+  {en:'Speed',cn:'速率',py:'sù lǜ',def:'How fast an object moves. A scalar quantity. v = d/t. Unit: m/s.',defCN:'物体运动的快慢。标量。v = d/t。单位：m/s。'},
+  {en:'Velocity',cn:'速度',py:'sù dù',def:'Speed in a specific direction. A vector quantity. Unit: m/s.',defCN:'特定方向的速率。矢量。单位：m/s。'},
+  {en:'Acceleration',cn:'加速度',py:'jiā sù dù',def:'The rate of change of velocity. a = (v-u)/t. Unit: m/s². Can be positive (speeding up) or negative (slowing down).',defCN:'速度的变化率。a = (v-u)/t。单位：m/s²。可以为正（加速）或负（减速）。'},
+  {en:"Newton's First Law",cn:'牛顿第一定律',py:'niú dùn dì yī dìng lǜ',def:'An object stays at rest or moves at constant velocity unless acted on by a resultant force.',defCN:'物体保持静止或匀速运动，除非受到合力的作用。'},
+  {en:"Newton's Second Law",cn:'牛顿第二定律',py:'niú dùn dì èr dìng lǜ',def:'F = ma. Resultant force = mass x acceleration. Also: F = change in momentum / time (HT).',defCN:'F = ma。合力=质量×加速度。也有：F = 动量变化/时间（高级）。'},
+  {en:"Newton's Third Law",cn:'牛顿第三定律',py:'niú dùn dì sān dìng lǜ',def:'For every action there is an equal and opposite reaction. Forces occur in interaction pairs on different objects.',defCN:'对于每个作用力，都有一个大小相等、方向相反的反作用力。力以相互作用对的形式作用在不同物体上。'},
+  {en:'Thinking Distance',cn:'反应距离',py:'fǎn yìng jù lí',def:'The distance a vehicle travels during the driver\'s reaction time. Affected by: speed, tiredness, drugs, alcohol, distractions.',defCN:'驾驶员反应时间内车辆行驶的距离。受速度、疲劳、药物、酒精、分心影响。'},
+  {en:'Braking Distance',cn:'刹车距离',py:'shā chē jù lí',def:'The distance a vehicle travels while braking. Affected by: speed, wet/icy roads, worn tyres, worn brakes, mass of vehicle.',defCN:'制动时车辆行驶的距离。受速度、湿滑路面、磨损轮胎、磨损制动器、车辆质量影响。'},
+  {en:'Terminal Velocity',cn:'终端速度',py:'zhōng duān sù dù',def:'The constant maximum speed reached when drag equals weight. Resultant force = 0, acceleration = 0.',defCN:'阻力等于重力时达到的恒定最大速度。合力=0，加速度=0。'},
+  {en:'Momentum (HT)',cn:'动量',py:'dòng liàng',def:'p = mv. A vector quantity. Unit: kg·m/s. Conserved in a closed system (total momentum before = total momentum after).',defCN:'p = mv。矢量。单位：kg·m/s。在封闭系统中守恒（事件前总动量=事件后总动量）。'},
+  {en:'Conservation of Momentum (HT)',cn:'动量守恒',py:'dòng liàng shǒu héng',def:'In a closed system, total momentum before a collision or explosion equals total momentum after.',defCN:'在封闭系统中，碰撞或爆炸前的总动量等于之后的总动量。'},
+  {en:'Inertia',cn:'惯性',py:'guàn xìng',def:'The tendency of an object to resist changes to its motion. Linked to mass — greater mass = greater inertia.',defCN:'物体抵抗运动变化的趋势。与质量有关——质量越大=惯性越大。'},
+  {en:'Gravitational Field Strength',cn:'引力场强度',py:'yǐn lì chǎng qiáng dù',def:'The force of gravity per unit mass at a point. Symbol: g. On Earth, g ≈ 10 N/kg. Unit: N/kg.',defCN:'某点单位质量所受的引力。符号：g。在地球上，g ≈ 10 N/kg。单位：N/kg。'},
+];
+
+function populateGlossary(data){document.getElementById('glossaryBody').innerHTML=data.map(function(item){return'<tr><td><div class="gl-en">'+item.en+'</div></td><td><div class="gl-cn">'+item.cn+'</div><div class="gl-py">'+item.py+'</div></td><td><div class="gl-def">'+item.def+'</div><div class="gl-def-cn">'+item.defCN+'</div></td></tr>';}).join('');}
+function filterGlossary(){var q=document.getElementById('glossarySearch').value.toLowerCase();populateGlossary(glossaryData.filter(function(item){return item.en.toLowerCase().includes(q)||item.cn.includes(q)||item.py.toLowerCase().includes(q)||item.def.toLowerCase().includes(q);}));}
+populateGlossary(glossaryData);
+
+var quizQuestions=[
+  {q:'What is the difference between a scalar and a vector quantity?',qCN:'标量与矢量有什么区别？',
+   opts:[{t:'Scalars are larger 标量更大',c:false},{t:'Vectors have both magnitude and direction; scalars have magnitude only 矢量既有大小又有方向；标量只有大小',c:true},{t:'Scalars change over time 标量随时间变化',c:false},{t:'Vectors are always forces 矢量总是力',c:false}],
+   fb:'Scalars (e.g. speed, distance, mass) have magnitude only. Vectors (e.g. velocity, force, acceleration, momentum) have both magnitude and direction.',fbCN:'标量（如速率、距离、质量）只有大小。矢量（如速度、力、加速度、动量）既有大小又有方向。'},
+
+  {q:'An object has a mass of 5 kg. g = 10 N/kg. What is its weight?',qCN:'一个物体质量为5 kg，g = 10 N/kg，它的重力是多少？',
+   opts:[{t:'0.5 N',c:false},{t:'50 N 正确',c:true},{t:'5 N',c:false},{t:'500 N',c:false}],
+   fb:'W = m x g = 5 x 10 = 50 N. Weight is a force measured in newtons. Mass is in kg and does not change with location.',fbCN:'W = m × g = 5 × 10 = 50 N。重力是用牛顿测量的力。质量用千克计，不随位置改变。'},
+
+  {q:'A 40 N force moves a crate 5 m. How much work is done?',qCN:'40 N的力使板条箱移动5 m，做了多少功？',
+   opts:[{t:'8 J',c:false},{t:'45 J',c:false},{t:'200 J 正确',c:true},{t:'35 J',c:false}],
+   fb:'W = F x s = 40 x 5 = 200 J. Work done equals energy transferred. Remember: the force must be in the direction of movement.',fbCN:'W = F × s = 40 × 5 = 200 J。做功等于能量转移。记住：力必须沿运动方向。'},
+
+  {q:'A spring (k = 80 N/m) is stretched by 0.25 m. What force is applied?',qCN:'弹簧（k = 80 N/m）被拉伸0.25 m，施加了多少力？',
+   opts:[{t:'320 N',c:false},{t:'20 N 正确',c:true},{t:'80.25 N',c:false},{t:'0.003 N',c:false}],
+   fb:'F = k x e = 80 x 0.25 = 20 N. This only applies below the limit of proportionality (Hooke\'s Law). Above this limit, the extension is no longer proportional to force.',fbCN:'F = k × e = 80 × 0.25 = 20 N。这仅适用于比例极限以下（胡克定律）。超过此极限，伸长量不再与力成正比。'},
+
+  {q:'What does the gradient of a velocity-time graph represent?',qCN:'速度-时间图的斜率代表什么？',
+   opts:[{t:'Speed 速率',c:false},{t:'Distance 距离',c:false},{t:'Acceleration 加速度',c:true},{t:'Force 力',c:false}],
+   fb:'The gradient (slope) of a velocity-time graph = acceleration. The area under a velocity-time graph = distance travelled.',fbCN:'速度-时间图的斜率=加速度。速度-时间图下方面积=行驶距离。'},
+
+  {q:'A car (mass 900 kg) accelerates at 4 m/s². What is the resultant force?',qCN:'一辆汽车（质量900 kg）以4 m/s²加速，合力是多少？',
+   opts:[{t:'225 N',c:false},{t:'904 N',c:false},{t:'3600 N 正确',c:true},{t:'896 N',c:false}],
+   fb:'F = m x a = 900 x 4 = 3600 N. Newton\'s 2nd Law: resultant force = mass x acceleration. This assumes constant mass.',fbCN:'F = m × a = 900 × 4 = 3600 N。牛顿第二定律：合力=质量×加速度。假设质量恒定。'},
+
+  {q:'What happens to a falling object when it reaches terminal velocity?',qCN:'下落物体达到终端速度时会发生什么？',
+   opts:[{t:'It continues to accelerate 它继续加速',c:false},{t:'It stops immediately 它立即停止',c:false},{t:'Drag equals weight, resultant = 0, speed is constant 阻力等于重力，合力=0，速度恒定',c:true},{t:'Weight increases 重力增大',c:false}],
+   fb:'At terminal velocity: drag force = weight, so resultant force = 0. By Newton\'s 1st Law, the object moves at constant velocity (no acceleration).',fbCN:'在终端速度时：阻力=重力，合力=0。由牛顿第一定律，物体匀速运动（无加速度）。'},
+
+  {q:'A 10 kg object moving at 6 m/s. What is its momentum? (HT)',qCN:'10 kg的物体以6 m/s运动，动量是多少？（高级）',
+   opts:[{t:'1.67 kg·m/s',c:false},{t:'60 kg·m/s 正确',c:true},{t:'16 kg·m/s',c:false},{t:'600 kg·m/s',c:false}],
+   fb:'p = m x v = 10 x 6 = 60 kg m/s. Momentum is a vector quantity (it has direction). The unit is kg m/s or N s.',fbCN:'p = m × v = 10 × 6 = 60 kg·m/s。动量是矢量（有方向）。单位是kg·m/s或N·s。'},
+
+  {q:'What does Newton\'s Third Law state?',qCN:'牛顿第三定律说明了什么？',
+   opts:[{t:'F = ma',c:false},{t:'Objects at rest stay at rest 静止物体保持静止',c:false},{t:'Every action has an equal and opposite reaction, acting on different objects 每个作用力都有大小相等、方向相反的反作用力，作用在不同物体上',c:true},{t:'Larger mass = smaller acceleration 质量越大=加速度越小',c:false}],
+   fb:'Newton\'s 3rd Law: forces always come in equal and opposite pairs acting on DIFFERENT objects. Example: you push the floor down, the floor pushes you up.',fbCN:'牛顿第三定律：力总是以大小相等、方向相反的对形式作用在不同物体上。例子：你向下推地板，地板向上推你。'},
+
+  {q:'A force of 200 N acts on an area of 0.05 m². What is the pressure?',qCN:'200 N的力作用在0.05 m²的面积上，压强是多少？',
+   opts:[{t:'10 Pa',c:false},{t:'4000 Pa 正确',c:true},{t:'0.00025 Pa',c:false},{t:'200.05 Pa',c:false}],
+   fb:'p = F/A = 200/0.05 = 4000 Pa. Pressure is force per unit area. A smaller area = greater pressure for the same force.',fbCN:'p = F/A = 200/0.05 = 4000 Pa。压强是单位面积上的力。对于相同的力，面积越小=压强越大。'},
+
+  {q:'What is the stopping distance of a car?',qCN:'汽车的制动距离是什么？',
+   opts:[{t:'Only the braking distance 只有刹车距离',c:false},{t:'Thinking distance + braking distance 反应距离+刹车距离',c:true},{t:'The distance at constant speed 匀速行驶的距离',c:false},{t:'Only the thinking distance 只有反应距离',c:false}],
+   fb:'Stopping distance = thinking distance (during reaction time) + braking distance (while brakes are applied). Both increase with speed.',fbCN:'制动距离=反应距离（反应时间内）+刹车距离（施加制动时）。两者都随速度增大而增大。'},
+
+  {q:'A 25 N force acts 0.6 m from a pivot. What is the moment? (Physics only)',qCN:'25 N的力作用在距支点0.6 m处，力矩是多少？（仅物理）',
+   opts:[{t:'24.4 N·m',c:false},{t:'41.7 N·m',c:false},{t:'15 N·m 正确',c:true},{t:'0.024 N·m',c:false}],
+   fb:'M = F x d = 25 x 0.6 = 15 N·m. d must be the PERPENDICULAR distance from the pivot to the line of action of the force.',fbCN:'M = F × d = 25 × 0.6 = 15 N·m。d必须是从支点到力的作用线的垂直距离。'},
+];
+
+var currentQ=0,score=0,answered=false;
+function loadQuestion(){var q=quizQuestions[currentQ];document.getElementById('qProgress').textContent='Q'+(currentQ+1)+' / '+quizQuestions.length;document.getElementById('progressFill').style.width=(((currentQ+1)/quizQuestions.length)*100)+'%';document.getElementById('questionText').textContent=q.q;document.getElementById('questionCN').textContent=q.qCN;document.getElementById('feedbackBox').className='feedback-box';document.getElementById('feedbackBox').innerHTML='';document.getElementById('nextBtn').className='next-btn';answered=false;document.getElementById('optionsGrid').innerHTML=q.opts.map(function(opt,i){return'<button class="option-btn" onclick="selectAnswer(this,'+opt.c+','+i+')">'+opt.t+'</button>';}).join('');}
+function selectAnswer(btn,correct,idx){if(answered)return;answered=true;var q=quizQuestions[currentQ];document.querySelectorAll('.option-btn').forEach(function(b,i){b.disabled=true;if(quizQuestions[currentQ].opts[i].c)b.classList.add('correct');});var fb=document.getElementById('feedbackBox');if(correct){score++;btn.classList.add('correct');document.getElementById('scoreDisplay').textContent='Score: '+score;fb.className='feedback-box correct show';fb.innerHTML='&#10003; Correct! &#27491;&#30830;&#65281;<br><small>'+q.fb+'</small><br><small style="color:rgba(74,222,128,0.7)">'+q.fbCN+'</small>';}else{btn.classList.add('wrong');fb.className='feedback-box wrong show';fb.innerHTML='&#10007; Not quite. &#19981;&#22826;&#23545;&#12290;<br><small>'+q.fb+'</small><br><small style="color:rgba(248,113,113,0.7)">'+q.fbCN+'</small>';}document.getElementById('nextBtn').className='next-btn show';}
+function nextQuestion(){currentQ++;if(currentQ>=quizQuestions.length){showResult();}else{loadQuestion();}}
+function showResult(){document.getElementById('quizActive').style.display='none';var res=document.getElementById('quizResult');res.className='quiz-result show';var pct=Math.round((score/quizQuestions.length)*100);document.getElementById('resultScore').textContent=score+' / '+quizQuestions.length;var msg,cn;if(pct>=80){msg='Excellent! Outstanding work! &#127775;';cn='&#22826;&#26834;&#20102;&#65281;&#25104;&#32489;&#20511;&#31199;&#65281;';}else if(pct>=60){msg='Good effort! Keep revising. &#128077;';cn='&#24456;&#22909;&#65281;&#32487;&#32493;&#22797;&#32722;&#12290;';}else{msg='Keep practising! &#128170;';cn='&#32487;&#32493;&#32451;&#20064;&#65281;';}document.getElementById('resultMsg').innerHTML=msg;document.getElementById('resultCN').innerHTML=cn;}
+function restartQuiz(){currentQ=0;score=0;document.getElementById('scoreDisplay').textContent='Score: 0';document.getElementById('quizActive').style.display='block';document.getElementById('quizResult').className='quiz-result';loadQuestion();}
+loadQuestion();
+</script>
+</body>
+</html>
